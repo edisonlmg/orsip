@@ -1,0 +1,55 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+$primary: #2D6A5E;      // teal ORSIP
+$secondary: #1F3D6B;    // azul profundo
+$body-bg: #F5F0EB;      // crema
+$body-color: #22303C;
+$font-family-sans-serif: "Montserrat", sans-serif;
+$link-color: $primary;
+$navbar-bg: $secondary;
+$navbar-fg: #FFFFFF;
+
+/*-- scss:rules --*/
+.navbar-brand {
+  font-weight: 700;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, $secondary 0%, $primary 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.hero-banner h1 {
+  color: white;
+  font-weight: 700;
+}
+
+.hero-banner .btn {
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.risk-badge {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: white;
+}
+
+.risk-alto { background-color: #C0392B; }
+.risk-medio { background-color: #E08E45; }
+.risk-bajo { background-color: #2D6A5E; }
+
+.card-metric {
+  background: white;
+  border-left: 4px solid $primary;
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}

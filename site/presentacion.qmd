@@ -1,0 +1,86 @@
+---
+title: "Presentación"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+# **OBSERVATORIO DE RIESGO SOCIAL DE LA INVERSIÓN PÚBLICA (ORSIP)**
+
+Este proyecto es presentado en el marco del **"Desafío de Datos para la Democracia: 25 años de la Carta Democrática Interamericana"**, una competencia regional de innovación convocada por la Organización de los Estados Americanos (OEA) y diseñada para transformar los principios democráticos en soluciones digitales concretas.
+
+------------------------------------------------------------------------
+
+## **SECCIÓN 1: INFORMACIÓN GENERAL**
+
+- **Nombre del proyecto:** Observatorio de Riesgo Social en la Inversión Pública (ORSIP).
+- **Nombre del equipo:** Perú5.
+- **País:** Perú.
+- **Objetivo:** dotar a los Estados Americanos de un sistema de alerta temprana que prevenga los conflictos sociales vinculados a la deficiente gestión de la inversión pública —proyectos ineficientes, inconclusos o mal ejecutados que postergan el cierre de brechas de servicios e infraestructura en favor de la población— antes de que ese deterioro escale a conflictividad y deslegitime a las instituciones gubernamentales.
+- **Alcance del prototipo:** inversiones gestionadas por gobiernos locales en Perú y financiadas por recursos de canon minero, recurso que por ley solo puede destinarse a inversión.
+
+------------------------------------------------------------------------
+
+## **SECCIÓN 2: VINCULACIÓN CON LA CARTA DEMOCRÁTICA INTERAMERICANA**
+
+La propuesta se enfoca en los **Artículos 11, 12, 13, 18 y 20** de la Carta Democrática Interamericana:
+
+1.  **Democracia, desarrollo integral y lucha contra la pobreza (Artículos 11, 12 y 13).** La Carta establece la interdependencia entre democracia y desarrollo socioeconómico.
+    Cuando el Estado no logra ejecutar los recursos de inversión que ya tiene asignados en territorios de alta vulnerabilidad, el presupuesto no se traduce en beneficios palpables, se erosiona la confianza ciudadana en las instituciones y se catalizan conflictos sociales.
+
+2.  **Fortalecimiento y preservación de las instituciones democráticas (Artículos 18 y 20).** Estos artículos promueven las políticas de carácter preventivo antes de que las crisis escalen.
+
+El presente proyecto operacionaliza estos principios a nivel subnacional mediante un **sistema de alerta temprana** basado en datos abiertos, que identifica territorios de riesgo elevado antes de que se active o reactive la conflictividad.
+
+------------------------------------------------------------------------
+
+## **SECCIÓN 3: PROBLEMA DEMOCRÁTICO QUE BUSCA ABORDAR**
+
+### **Planteamiento del problema**
+
+En el Perú, la deficiente gestión de la inversión pública —proyectos ineficientes, inconclusos o mal ejecutados— es un detonante recurrente de deslegitimación institucional y conflictividad social, particularmente en territorios de alta exposición a la actividad extractiva de minerales.
+
+El vínculo entre gestión estatal del gasto y protesta social está hoy institucionalmente fragmentado: el MEF reporta ejecución presupuestal, el MINEM produce estadísticas de actividad minera y la Defensoría del Pueblo registra los conflictos sociales, pero ninguna entidad integra estas dimensiones en una métrica territorial que permita anticipar el riesgo.
+
+El problema afecta directamente a la población de los territorios donde el presupuesto asignado no se traduce en resultados visibles, y a las instituciones del Estado, que carecen de una herramienta que jerarquice el riesgo antes de que escale.
+Esto es relevante para la democracia porque erosiona la confianza ciudadana y debilita la legitimiidad del Estado.
+
+### **Evidencia o datos que sustentan el problema**
+
+A febrero de 2026, la Defensoría registró 192 conflictos sociales a nivel nacional (165 activos), con predominio de los socioambientales (53.3%), concentrados en regiones de bajo desempeño en ejecución del canon como Loreto, Puno y Áncash; ese mes también emitió 61 alertas defensoriales, generadas mediante monitoreo manual en 26 oficinas territoriales, sin soporte cuantitativo predictivo, dejando sin respuesta la pregunta de en qué parte del resto del territorio se concentran hoy las condiciones que precedieron a conflictos ya registrados.
+
+Por su parte, Ponce y McClintock (2014, Latin American Politics and Society), realizaron un estudio revisado por pares que valida empíricamente la relación entre ineficiencia burocrática local, producción minera y protesta social en el Perú, demostrando que la cantidad de recursos asignados por canon minero y el rezago de conflictos sociales aporta positivamente a una mayor conflictividad social, mientras la eficiencia en la gestión de recursos la atenúa.
+
+------------------------------------------------------------------------
+
+## **SECCIÓN 4: DESCRIPCIÓN DE LA SOLUCIÓN O PROTOTIPO**
+
+### **¿Qué es el producto o prototipo?**
+
+ORSIP es un observatorio digital compuesto por tres piezas interoperables.
+El sitio web (Quarto) que documenta la propuesta, la metodología y el avance del proyecto.
+El mapa de riesgo interactivo (R/Shiny) visualiza el Índice de Riesgo Social de la Inversión Pública (IRSIP) —un puntaje de 0 a 100 por distrito y mes— con semaforización y renderización dinámica a nivel departamental, provincial y distrital, además de una ficha de trazabilidad que descompone el puntaje de cada distrito en el aporte de sus determinantes.
+
+También contiene un repositorio de datos abiertos que publica los datasets procesados que alimentan el índice, para que terceros auditen y repliquen el cálculo.
+
+El prototipo del proyecto delimita su alcance a las inversiones gestionadas por gobiernos locales en Perú y financiadas por canon.
+Asimismo, incorpora como primeras capas de cruce territorial, pobreza monetaria y riesgo ante inundaciones.
+
+En su etapa de refinamiento —mejora del prototipo, no versión final del proyecto— se sumarán más capas al mapa, más variables al índice y coeficientes propios estimados sobre datos peruanos recientes.
+
+### **¿Cómo funciona?**
+
+El flujo de uso parte del mapa interactivo: el usuario ingresa al tablero en Shiny y visualiza el IRSIP a nivel nacional, con opción de hacer zoom hasta el nivel distrital.
+Puede activar capas adicionales —en el prototipo inicial, población proyectada, pobreza monetaria y riesgo ante inundaciones— para cruzar el índice con condiciones de vulnerabilidad territorial y contextualizar el puntaje de cada distrito.
+
+Al seleccionar un distrito, el usuario accede al panel de alertas tempranas, que prioriza territorios con puntaje elevado y a la ficha de trazabilidad, que descompone el IRSIP en el aporte específico de cada una de sus variables —ejecución del canon, canon per cápita, valor de producción minera y rezago de conflictos—, de modo que el usuario entienda por qué un territorio recibió su puntaje y no solo cuál fue.
+Los datasets procesados quedan disponibles en el repositorio abierto para su descarga y auditoría por terceros.
+
+### **Usuarios o beneficiarios previstos**
+
+1.  Instituciones públicas de prevención y control: la Presidencia del Consejo de Ministros y la Defensoría del Pueblo, que pueden usar el panel de alertas tempranas para focalizar el monitoreo territorial antes de que un riesgo escale a conflicto activo; también gobiernos regionales y locales, que acceden a la ficha de trazabilidad de su propio distrito para identificar qué variable eleva su puntaje.
+2.  Sociedad civil, que puede auditar de forma independiente la ejecución de recursos de inversión en su territorio a partir del repositorio de datos abiertos, sin depender de la interpretación institucional.
+3.  Academia e investigadores, que disponen del código abierto, documentado y parametrizado en GitHub, así como de los datasets procesados, para replicar el cálculo, extenderlo o adaptarlo a otras preguntas de investigación.
+4.  Comunidades de los territorios evaluados, como beneficiarios finales indirectos: una alerta temprana focalizada correctamente puede traducirse en mejor ejecución de recursos ya asignados a su distrito.
+5.  Instituciones homólogas de la región, dado que la arquitectura es replicable en cualquier Estado miembro de la OEA que cuente con administración financiera integrada, estadísticas extractivas y registro de conflictividad.
+

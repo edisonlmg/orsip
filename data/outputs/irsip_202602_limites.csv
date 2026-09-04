@@ -1,0 +1,5 @@
+variable,transf,ventana,min_original,max_original
+rezago_conflictos,lineal,panel,0,8
+ejecucion_canon,ninguna,rank intra-mes,0,1
+canon_pc,log,panel,0,136582.88293650793
+mineria_pc,log,panel,0,10966026.729678383

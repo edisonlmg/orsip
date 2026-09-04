@@ -1,0 +1,201 @@
+---
+title: "Metodología"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+# Observatorio de Riesgo Social en la Inversión Pública (ORSIP)
+
+**Metodología y Especificación del Índice de Riesgo Social de la Inversión Pública (IRSIP)**
+
+*Documento metodológico elaborado en el marco del concurso "Desafío de Datos para la Democracia: 25 años de la Carta Democrática Interamericana".*
+
+------------------------------------------------------------------------
+
+## El Índice de Riesgo Social de la Inversión Pública (IRSIP)
+
+### Unidad de análisis y cobertura
+
+| Dimensión | Especificación del MVP |
+|:-----------------------------------|:-----------------------------------|
+| Unidad de análisis | Distrito-mes |
+| Cobertura territorial | 1 892 distritos (universo con PIM de canon o canon recaudado) |
+| Cobertura temporal del panel | Enero 2019 – mes de corte (86 meses al cierre del MVP) |
+| Mes de corte del índice publicado | Febrero 2026 |
+| Escala del índice | 0 a 100 |
+
+### Base empírica de los pesos
+
+El IRSIP se apoya en la validación empírica del artículo de Ponce y McClintock (2014):
+
+> *Ponce, Aldo, and Cynthia McClintock. 2014. "The Explosive Combination of Inefficient Local Bureaucracies and Mining Production: Evidence from Localized Societal Protests in Peru." Latin American Politics and Society (LAPS), 56(3): 118-140.* [Artículo en JSTOR](https://www.jstor.org/stable/43284916) \| [Apéndices y Datos](https://sites.google.com/site/aldofponceugolini/data)
+
+Se utiliza la **Especificación 3 de "All Types of Social Protests"** del modelo binomial negativo (Tabla 1), por dos razones: incluye el set completo de controles (PBI, exportaciones, contribuyentes, pobreza y oposición política) y no está acotada a un tipo de conflicto, lo que la hace apropiada como indicador general de riesgo.
+
+### Derivación de pesos: el estadístico $t$
+
+Los coeficientes crudos ($\beta$) no son comparables entre sí como pesos de importancia, porque su magnitud depende de las unidades de la variable.
+En el estudio original, la ejecución de canon está expresada en porcentaje mientras el canon per cápita está en soles por habitante: el que un coeficiente sea numéricamente mayor que otro no dice nada sobre su relevancia relativa.
+
+Para obtener pesos comparables se usa el estadístico $t$, que normaliza simultáneamente por la escala de la variable y por la precisión de la estimación:
+
+$$t = \frac{\beta}{SE}$$
+
+| Variable | $\beta$ | $SE$ | Signif. | $t$ | Peso ($t / \Sigma\lvert t\rvert$) | Dirección |
+|:----------|:---------:|:---------:|:---------:|:---------:|:---------:|:----------|
+| Rezago de conflictos ($t-1$) | 0.11 | 0.01 | \*\*\* | 11.0 | **+61.1 %** | Aumenta el riesgo |
+| Ejecución de canon | −0.003 | 0.001 | \*\*\* | −3.0 | **−16.7 %** | Protector |
+| Canon per cápita | 0.002 | 0.001 | \* | 2.0 | **+11.1 %** | Aumenta el riesgo |
+| Producción minera per cápita | 0.0004 | 0.0002 | \*\* | 2.0 | **+11.1 %** | Aumenta el riesgo |
+
+$\Sigma\lvert t\rvert = 11.0 + 3.0 + 2.0 + 2.0 = 18.0$
+
+El signo negativo de la ejecución de canon se conserva en la fórmula, de modo que la variable entra como factor de protección sin necesidad de invertirla manualmente.
+
+### Construcción de las variables
+
+Las cuatro variables del paper original son anuales y departamentales.
+Su traslado a un panel distrital y mensual exige decisiones explícitas:
+
+**Rezago de conflictos (**$t-1$).
+Número de conflictos distintos activos en el distrito en el mes anterior, según el registro de la Defensoría del Pueblo.
+Se cuentan los casos en estado *Activo* o *Reactivado*; los casos *Latentes* quedan fuera de la definición base por no implicar acciones en curso.
+Un mismo caso cuenta una sola vez por distrito-mes aunque tenga múltiples registros.
+Los casos multirregionales o de alcance nacional no tienen ubigeo distrital y quedan excluidos por construcción.
+
+**Ejecución de canon.** Devengado acumulado del año sobre PIM de la fuente canon, recortado al rango $[0, 1]$.
+Es un ratio acumulado, no un flujo mensual, lo que tiene consecuencias directas sobre la normalización (Sección 2.5).
+
+**Canon per cápita.** Canon recaudado acumulado de los últimos 12 meses, dividido por la población proyectada del distrito.
+Se usa suma móvil anual y no monto mensual porque las transferencias son fuertemente estacionales: en 2025 el canon nacional transferido pasó de S/ 2 497 millones en enero a S/ 39 millones en marzo y S/ 4 935 millones en junio.
+Con montos mensuales el índice mediría en buena parte el calendario de transferencias y no la exposición del territorio.
+Los montos negativos por regularización se truncan en cero.
+
+**Producción minera per cápita.** Valor de producción minera de los últimos 12 meses en soles, dividido por la población distrital.
+El estudio original usa producción física; se usa valor porque es el único agregado sumable entre minerales distintos.
+La contrapartida es que el valor mezcla volumen y precio internacional, por lo que un distrito puede subir de puntaje por un alza de precios sin cambio en su actividad extractiva.
+
+### Normalización
+
+Cada variable se lleva al rango $[0, 1]$, pero no todas con el mismo procedimiento, porque no todas tienen la misma patología de escala.
+
+**Rezago de conflictos:** min-max sobre el histórico completo del panel, sin transformación previa.
+Se conserva la escala lineal del conteo por fidelidad al modelo original, que estima el efecto sobre el número de casos.
+
+**Canon per cápita y producción minera per cápita:** transformación $\log(1+x)$ y luego min-max sobre el histórico.
+Ambas distribuciones son extremadamente asimétricas —unos pocos distritos mineros de baja población concentran los montos— y el min-max directo dejaría a más del 95 % de los distritos comprimidos cerca de cero.
+La alternativa evaluada, recortar la cola al percentil 99, generaba 28 distritos empatados exactamente en el techo de la escala, que dejaban de ordenarse entre sí justamente en el tramo de mayor interés analítico.
+La transformación logarítmica comprime la cola sin producir empates.
+
+**Ejecución de canon:** percentil del distrito dentro de la sección transversal de su propio mes.
+Esta es la decisión menos obvia y la más consecuente.
+Al ser un acumulado del año fiscal, la ejecución promedio nacional crece mecánicamente de 1.3 % en enero a 75.6 % en diciembre.
+Normalizarla contra el histórico convertía la variable en un indicador del punto del año fiscal: el IRSIP promedio caía de 30 puntos en enero a 13 en diciembre por efecto exclusivo del ciclo de gasto.
+Con el percentil intra-mes, la variable mide el desempeño del distrito **relativo a sus pares en el mismo punto del año fiscal**, y el desplazamiento estacional del índice desaparece (la desviación estándar de la media mensual pasa de 5.3 a 0.2 puntos).
+
+### Fórmula del IRSIP
+
+**Paso 1 — Índice bruto.** Suma ponderada de las variables normalizadas, respetando los signos:
+
+$$\text{IRSIP}_{bruto} = 0.611 \cdot R^{norm}_{t-1} - 0.167 \cdot E^{norm}_{t} + 0.111 \cdot C^{norm}_{t} + 0.111 \cdot M^{norm}_{t}$$
+
+donde $R$ es el rezago de conflictos, $E$ la ejecución de canon, $C$ el canon per cápita y $M$ la producción minera per cápita.
+
+**Paso 2 — Reescalamiento a 0-100 con ancla fija.**
+
+$$\text{IRSIP} = 100 \cdot \frac{\text{IRSIP}_{bruto} - \text{IRSIP}^{min}_{panel}}{\text{IRSIP}^{max}_{panel} - \text{IRSIP}^{min}_{panel}}$$
+
+El ancla se calcula sobre el índice bruto de **todo el panel histórico**, no del mes publicado.
+Esto es deliberado: con un reescalamiento sobre la sección transversal del mes, el distrito de peor desempeño de cada mes marcaría 100 por construcción y el índice no sería comparable en el tiempo.
+Con el ancla del panel, un IRSIP de 55 significa lo mismo en enero que en diciembre.
+
+Se evaluó también un ancla teórica —los límites algebraicos de la suma ponderada, $[-0.167,\ 0.833]$— que también preserva la comparabilidad temporal, pero comprime todos los distritos al tramo 15-30 y hace el índice ilegible para el usuario del tablero.
+
+**Nota de reproducibilidad:** el ancla del panel vigente es $[-0.167,\ 0.547]$.
+Cuando el panel se extienda con nuevos meses, el ancla debe **congelarse** en el valor publicado; recalcularla en cada corrida desplazaría retroactivamente toda la serie histórica y rompería la comparabilidad que el ancla busca garantizar.
+
+### Determinación del mes de corte
+
+El índice se publica para el último mes con datos completos en las cuatro fuentes, lo que requiere una regla explícita por dos razones.
+
+Primero, el panel de gasto del MEF viene **balanceado con ceros hasta el cierre del año fiscal**: la ausencia de datos no aparece como valor faltante, de modo que una verificación estándar de completitud daría diciembre como mes válido.
+La regla implementada compara el nivel de actividad de cada mes (número de distritos con devengado y con canon recaudado no nulos) contra la mediana de los seis meses previos, y descarta los meses que caen por debajo del 85 %.
+
+Segundo, las fuentes tienen rezagos de publicación distintos y el rezago de conflictos consume un mes adicional.
+Al cierre del MVP:
+
+| Fuente                    | Último dato | Usable hasta     |
+|:--------------------------|:------------|:-----------------|
+| Gasto y canon (MEF)       | Junio 2026  | Junio 2026       |
+| Conflictos (Defensoría)   | Enero 2026  | **Febrero 2026** |
+| Producción minera (MINEM) | Mayo 2026   | Mayo 2026        |
+| Población (INEI)          | 2026        | Diciembre 2026   |
+
+El binding constraint es el registro de conflictos: el índice se publica para **febrero de 2026** aunque existan datos de canon hasta junio.
+Esta dependencia es estructural y debe monitorearse, porque determina la latencia real del sistema de alerta temprana.
+
+------------------------------------------------------------------------
+
+## Fuentes de Datos Utilizadas
+
+Todas las fuentes son 100% públicas y oficiales, de acceso abierto y provenientes de entidades del Estado peruano, lo que permite que la metodología sea transparente, reproducible, auditable y potencialmente actualizable de manera periódica:
+
+1.  **Variables de gasto público – Ministerio de Economía y Finanzas (MEF)**
+    - Portal: https://datosabiertos.mef.gob.pe/
+    - Dataset Presupuesto y ejecución de gasto devengado mensual: https://datosabiertos.mef.gob.pe/dataset/presupuesto-y-ejecucion-de-gasto-devengado-mensual
+    - Dataset Presupuesto y ejecución de ingreso recaudado mensual: https://datosabiertos.mef.gob.pe/dataset/presupuesto-y-ejecucion-de-ingreso-recaudado-mensual
+2.  **Variables de conflictividad social – Defensoría del Pueblo**
+    - Portal: https://www.defensoria.gob.pe/mapas-de-conflictos-sociales/
+3.  **Variables de actividad minera – Ministerio de Energía y Minas (MINEM)**
+    - Portal: https://www.gob.pe/institucion/minem/colecciones/6-boletin-estadistico-minero
+4.  **Variables cartográficas y territoriales – Gobierno del Perú**
+    - Portal: https://geosdot.servicios.gob.pe/geoportal/
+5.  **Variables geográficas y de gestión del riesgo de desastres – CENEPRED**
+    - Portal: https://sigrid.cenepred.gob.pe/sigridv3/documento/22169
+6.  **Variables económicas y sociales – Instituto Nacional de Estadística e Informática (INEI)**
+    - Portal: https://sirtod.inei.gob.pe/
+7.  **Quintiles de pobreza distrital – Ministerio de Desarrollo e Inclusión Social (Midis)**
+    - Portal: https://app.midis.gob.pe/RedInforma/ContenidoEstructurado/Index#
+
+------------------------------------------------------------------------
+
+## 5. Limitaciones del Índice
+
+Estas limitaciones son propias del diseño del IRSIP y son distintas de las limitaciones de las fuentes.
+
+1.  El subregistro de conflictos (solo 253 de 1,892 distritos con registro histórico) que se mitigará dando prioridad, en la fase de refinamiento, a la estimación de coeficientes propios sobre el panel distrital, donde el exceso de ceros puede modelarse directamente, además de incorporar un canal de reportes ciudadanos con anonimato por defecto.
+2.  Los coeficientes importados (panel departamental-anual 2004-2010 aplicado a un panel distrital-mensual) que se sustituirán por un modelo binomial negativo estimado sobre el propio panel 2019-2026 del observatorio, permitiendo además estimar términos de interacción e intervalos de confianza.
+3.  La medición de producción minera en valor que se abordará explorando series de volumen físico como variable complementaria.
+4.  El rezago heterogéneo de publicación que se mitigará explorando fuentes de conflictividad de mayor frecuencia que acerquen el índice al tiempo real. La cobertura de nombres de distrito se resolverá integrando el catálogo de ubigeos del INEI de forma sistemática.
+
+------------------------------------------------------------------------
+
+## 6. Arquitectura Tecnológica del Observatorio
+
+El proyecto está estructurado bajo una filosofía de transparencia y reproducibilidad:
+
+- **Web principal (Quarto):** alojada en `https://orsip.site/`, documenta el proyecto y su progreso.
+- **Mapa de riesgo (dashboard en Shiny):** interfaz interactiva que permite visualizar el IRSIP a nivel departamental, provincial y distrital, con renderización dinámica según el nivel de zoom.
+- **Ficha de trazabilidad distrital:** descompone el puntaje de cada distrito en el aporte de sus cuatro determinantes, de modo que el usuario pueda ver por qué un territorio recibió su puntaje y no solo cuál fue.
+- **Datos abiertos (`data/outputs`):** publica los datasets procesados que alimentan el índice —el corte del mes, la serie mensual completa, los límites de normalización y el reporte de disponibilidad por fuente— para que terceros puedan auditar y reutilizar los cálculos.
+- **Código abierto (GitHub):** el script de cálculo del IRSIP es un único archivo parametrizado en R (`tidyverse`), donde cada decisión metodológica de las Secciones 2.4 a 2.7 es un parámetro explícito y modificable.
+
+------------------------------------------------------------------------
+
+## 7. Siguientes Pasos (Fase de Refinamiento)
+
+Los retos de la etapa de refinamiento son:
+
+1.  **Estimación de coeficientes propios.** Transición del modelo de Ponce y McClintock (2014) a un modelo binomial negativo estimado sobre el panel distrito-mes 2019-2026 construido para este observatorio.
+    Esto sustituye pesos importados por pesos propios, permite estimar los términos de interacción entre ejecución y exposición extractiva que motivan el proyecto, y hace posible reportar intervalos de confianza sobre el puntaje.
+    Requiere tratar explícitamente el exceso de ceros del conteo distrital de conflictos y la endogeneidad entre conflicto y paralización de obras.
+
+2.  **Inclusión de nuevas variables.** El criterio de inclusión será la mejora en capacidad predictiva fuera de muestra, no la disponibilidad del dato.
+
+3.  **Mecanismo de participación ciudadana.** Incorporar un canal de reportes ciudadanos que complemente el monitoreo institucional y mitigue el sesgo de subregistro.
+    Su diseño debe resolver primero tres condiciones: anonimato por defecto, agregación previa a la publicación para evitar represalias en zonas de conflicto, y un protocolo de validación que impida que el canal se use para manipular el puntaje de un territorio.
+    Se aplicará la Ley N° 29733 de Protección de Datos Personales.
+
+4.  **Reducción de la latencia del sistema.** El mes de corte lo determina hoy el rezago de publicación de la Defensoría.
+    Explorar fuentes complementarias de conflictividad de mayor frecuencia permitiría acercar el índice al tiempo real, que es la condición para que una alerta temprana sea operativamente útil.

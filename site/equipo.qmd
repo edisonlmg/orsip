@@ -1,0 +1,40 @@
+---
+title: "Equipo"
+format:
+  html:
+    css: styles.css
+---
+
+## Sobre el equipo
+
+El **Observatorio de Riesgo Social en la Inversión Pública (ORSIP)** es desarrollado por un equipo de ingenieros economistas especialistas en analistas de datos y  en políticas públicas dedicados a transformar información estatal abierta en herramientas de prevención institucional y gobernanza subnacional.
+
+---
+
+## Integrantes
+
+::: {.grid}
+
+::: {.g-col-6}
+### **Edison Mondragón Guzmán**
+* **Profesión:** Ingeniero Economista
+* **Perfil:** Especialista en ciencia de datos e inversión pública.
+* **Contacto:** [LinkedIn](https://www.linkedin.com/in/edison-mondragon/)
+:::
+
+::: {.g-col-6}
+### **Diego Quiroz Tocasca**
+* **Profesión:** Ingeniero Economista
+* **Perfil:** Analista de políticas públicas y finanzas.
+* **Contacto:** [LinkedIn](https://www.linkedin.com/in/diego-m-quiroz-tocasca-80086937/)
+:::
+
+:::
+
+---
+
+## Colabora con el proyecto
+
+Puedes ponerte en contacto con nosotros a través de nuestros perfiles profesionales o mediante el repositorio en Github.
+
+

@@ -1,0 +1,47 @@
+project:
+  type: website
+  output-dir: ../docs
+
+website:
+  title: "ORSIP"
+  site-url: "https://orsip.site/"
+  description: "Observatorio de Riesgo Social en la Inversión Pública"
+  # favicon: favicon.png
+  navbar:
+    background: primary
+    # logo: logo.png
+    left:
+      - href: index.qmd
+        text: Inicio
+      - href: presentacion.qmd
+        text: Presentacion
+      - href: metodologia.qmd
+        text: Metodología
+      - href: https://edisonlmg.shinyapps.io/orsip/
+        text: Mapa de Riesgo
+        target: _blank
+      - href: https://github.com/edisonlmg/orsip/tree/main/data/outputs
+        text: Datos abiertos
+        target: _blank
+      - href: equipo.qmd
+        text: Equipo
+    right:
+      - icon: github
+        href: https://github.com/edisonlmg/orsip
+        text: GitHub
+  page-footer:
+    left: "ORSIP — Desafío de Datos para la Democracia, OEA/CDI"
+    right: "github.com/edisonlmg/orsip"
+
+format:
+  html:
+    theme: [cosmo, styles.scss]
+    toc: false
+    grid:
+      body-width: 950px
+    linkcolor: "#2D6A5E"
+
+execute:
+  echo: false
+  warning: false
+  freeze: auto

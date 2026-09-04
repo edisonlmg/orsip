@@ -1,0 +1,12 @@
+name: orsip
+title:
+username: edisonlmg
+account: edisonlmg
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17739697
+bundleId: 12505129
+url: https://edisonlmg.shinyapps.io/orsip/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

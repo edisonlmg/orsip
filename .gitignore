@@ -1,0 +1,33 @@
+# Datos crudos: no se versionan (peso y condiciones de uso de cada fuente)
+data/raw/*
+data/processed/*
+data/interim/*
+!data/raw/.gitkeep
+!data/raw/*/.gitkeep
+
+# Sí se versiona: tablas de referencia mantenidas a mano
+!data/reference/
+!data/reference/*
+
+# Geometrías procesadas: livianas, se versionan
+!data/processed/geo_*.rds
+
+# Copia de trabajo de la app (se regenera con scripts/00_load_shapefiles.R)
+app/data/*.rds
+
+# renv
+renv/library/
+renv/staging/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+/.quarto/
+**/*.quarto_ipynb

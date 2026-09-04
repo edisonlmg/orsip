@@ -1,0 +1,67 @@
+---
+title: ""
+---
+
+::: {.hero-banner}
+# ORSIP
+### Observatorio de Riesgo Social en la Inversión Pública
+
+Un modelo de alerta temprana que estima el riesgo de conflictividad social en
+proyectos de inversión pública, cruzando capacidad de gestión estatal,
+condiciones estructurales de vulnerabilidad y registros de conflicto social.
+
+[Explorar el mapa de riesgo →](https://edisonlmg.shinyapps.io/orsip/){.btn .btn-light .btn-lg role="button"}
+[Ver la metodología →](metodologia.qmd){.btn .btn-outline-light .btn-lg role="button"}
+[Datos abiertos →](https://github.com/edisonlmg/orsip/tree/main/data/outputs){.btn .btn-outline-light .btn-lg role="button"}
+:::
+
+## El objetivo
+
+Proporcionar a los Estados Americanos de un sistema de alerta temprana que prevenga los conflictos sociales vinculados a la deficiente gestión de la inversión pública —proyectos ineficientes, inconclusos o mal ejecutados que postergan el cierre de brechas de servicios e infraestructura en favor de la población— antes de que ese deterioro escale a conflictividad y deslegitime a las instituciones gubernamentales.
+
+El prototipo del proyecto delimita su alcance a las inversiones gestionadas por gobiernos locales en Perú y financiadas por canon.
+
+## ¿Qué hace ORSIP?
+
+::: {.grid}
+
+::: {.g-col-4}
+::: {.card-metric}
+**Pesos estimados, no asignados**
+
+Las ponderaciones son coeficientes del modelo, no juicio experto repartido
+en proporción al número de indicadores.
+:::
+:::
+
+::: {.g-col-4}
+::: {.card-metric}
+**Registros administrativos abiertos**
+
+Transferencias de canon y ejecución presupuestal (MEF/SIAF), producción
+minera (MINEM) y conflictos sociales (Defensoría del Pueblo).
+:::
+:::
+
+::: {.g-col-4}
+::: {.card-metric}
+**Alerta temprana, no registro histórico**
+
+Busca indicios del *inicio o reactivación* de conflictos.
+:::
+:::
+
+:::
+
+## Video instructivo
+
+{{< video https://youtu.be/J4j8YQt5oFw >}}
+
+## Estado del proyecto
+
+::: {.callout-note}
+Este sitio muestra un **prototipo (MVP)** desarrollado para el Desafío de Datos para la Democracia: 25 años de la Carta Democrática Interamericana. El pipeline completo se documentan en la sección [Metodología](metodologia.qmd).
+:::
+
+Código fuente y datos derivados disponibles en
+[github.com/edisonlmg/orsip](https://github.com/edisonlmg/orsip).

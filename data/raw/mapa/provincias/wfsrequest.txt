@@ -1,0 +1,1 @@
+https://geosdot.servicios.gob.pe/geoserver/geoportal/wfs?service=WFS&request=GetFeature&outputFormat=SHAPE-ZIP&srsName=epsg:4326&typeName=v_provincias_2023
