@@ -5,6 +5,7 @@ project:
 website:
   title: "ORSIP"
   site-url: "https://orsip.site/"
+  google-analytics: G-DY50TEYDTH
   description: "Observatorio de Riesgo Social en la Inversión Pública"
   # favicon: favicon.png
   navbar:
